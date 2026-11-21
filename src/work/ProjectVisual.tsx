@@ -98,7 +98,7 @@ export function ProjectVisual({ project, size = 'card' }: ProjectVisualProps) {
       <svg className="pv-motif" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
         {motifs[project.category](seeded(seed))}
       </svg>
-      <span className="pv-initial">{project.title.charAt(0)}</span>
+      <span className="pv-initial">{project.monogram ?? project.title.charAt(0)}</span>
     </div>
   )
 }

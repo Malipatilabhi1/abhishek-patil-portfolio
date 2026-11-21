@@ -175,6 +175,10 @@ export type Project = {
   category: ProjectCategory
   /** One sentence. */
   summary: string
+  /** Case-study Overview, 2–3 sentences: context, the problem, my part. The section is hidden when unset. */
+  overview?: string
+  /** Letter on the generated project artwork; defaults to the title's first letter. */
+  monogram?: string
   highlights: readonly string[]
   tech: readonly string[]
   featured: boolean
@@ -192,6 +196,7 @@ export const projects: readonly Project[] = [
     kind: 'Professional',
     category: 'Banking',
     summary: 'Conversion and processing of cross-border payment messages between SWIFT MT and ISO 20022 MX / CBPR+ formats.',
+    overview: 'A Finonyx banking product for cross-border payments, where messages move between SWIFT MT and ISO 20022 MX / CBPR+ formats. Every message has to be mapped field by field, pass XML schema validation and behave correctly across regional configurations. I enhanced the conversion and processing workflows, worked on field mapping and schema validation, and linked return messages to their original payment references.',
     highlights: [
       'Enhanced MT/MX and CBPR+ conversion and processing workflows across regional configurations.',
       'Worked on payment-message field mapping and XML schema validation.',
@@ -210,6 +215,7 @@ export const projects: readonly Project[] = [
     kind: 'Professional',
     category: 'Banking',
     summary: 'Messaging platform for bank operations teams, from approvals to reconciliation.',
+    overview: 'Kuber is a Finonyx messaging platform for bank operations teams. Those teams need controlled approvals, secure sign-in and a way to check that reported message counts match what was actually processed. I built frontend and API changes for BIC mapping, maker-checker approvals and 2FA/OTP, implemented GHUB messaging workflows, and developed the reconciliation report on top of inward and outward message-event recording.',
     highlights: [
       'Built frontend and API changes for BIC mapping, maker-checker approvals and 2FA/OTP.',
       'Implemented GHUB messaging workflows.',
@@ -228,6 +234,7 @@ export const projects: readonly Project[] = [
     kind: 'Professional',
     category: 'Enterprise',
     summary: 'Data exploration interface for structured and unstructured knowledge-graph data.',
+    overview: 'JIVA is a knowledge-graph application at JK Tech for exploring structured and unstructured data. Users needed to search, page through, upload and download that data, with updates arriving in real time. I built the tables, search, pagination and file handling, integrated REST APIs and WebSocket updates, and developed responsive Next.js interfaces.',
     highlights: [
       'Built tables, search, pagination and file upload/download for data exploration.',
       'Integrated REST APIs and real-time WebSocket updates.',
@@ -246,6 +253,7 @@ export const projects: readonly Project[] = [
     kind: 'Professional',
     category: 'Enterprise',
     summary: 'End-to-end hiring workflows from job posting to interview.',
+    overview: 'A JK Tech application that runs hiring end to end, from job posting to interview. Each stage (postings, candidate screening, profiles and interviews) needed its own module and validated data entry. I built those Angular modules and their dynamic, validated forms, and integrated them with Node.js services and MySQL data operations.',
     highlights: [
       'Built Angular modules for job postings, candidate screening, profiles and interviews.',
       'Created dynamic, validated forms.',
@@ -263,6 +271,8 @@ export const projects: readonly Project[] = [
     kind: 'Personal',
     category: 'Personal',
     summary: "The site you're on: React 19, React Three Fiber and Motion, tuned for performance and accessibility.",
+    overview: "My personal site, built with React, TypeScript, Three.js, Motion and Vite. The challenge was making it 3D and motion-rich without hurting load speed or accessibility, so the 3D hero is lazy-loaded and never blocks first paint, and the site supports light/dark themes and reduced motion. I designed and built it myself; the code is open on GitHub.",
+    monogram: 'P',
     highlights: [
       'Lazy-loaded 3D hero that never blocks first paint.',
       'Multi-page routing, light/dark themes, reduced-motion support.',
@@ -310,7 +320,15 @@ export const education: Education = {
   end: 2020,
 }
 
-export const recognition: readonly string[] = ['Q2 Spot Award for contribution and delivery']
+export type Recognition = {
+  title: string
+  org: string
+  year: number
+}
+
+export const recognition: readonly Recognition[] = [
+  { title: 'Q2 Spot Award', org: 'Finonyx', year: 2026 },
+]
 
 export const spokenLanguages: readonly string[] = ['English', 'Hindi', 'Kannada', 'Telugu']
 

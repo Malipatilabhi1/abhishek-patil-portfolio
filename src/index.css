@@ -6,6 +6,8 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  /* Reserve the scrollbar's space on every page, so short pages don't shift the header sideways. */
+  scrollbar-gutter: stable;
 
   --background: #151719;
   --background-glow: #1f2629;
@@ -40,6 +42,8 @@
   --code-attr: #fcd34d;
   --code-string: #86efac;
   --shell-gutter: clamp(16px, 5.25vw, 88px);
+  /* Vertical rhythm between stacked blocks on the case-study page. */
+  --case-gap: clamp(32px, 4vw, 48px);
   --header-height: 84px;
 }
 
@@ -736,10 +740,8 @@ button {
   font-size: clamp(0.72rem, 2.2cqi, 0.92rem);
 }
 .card-build { inset: auto -1.5% 1.5% auto; }
-.card-badge { inset: 6% 0 auto auto; }
 
 .hero-visual[data-motion="true"] .card-build .floating-card-bob { animation-duration: 7s; animation-delay: -2s; }
-.hero-visual[data-motion="true"] .card-badge .floating-card-bob { animation-duration: 5s; animation-delay: -1s; }
 
 @keyframes bob {
   50% { transform: translateY(-8px); }
@@ -779,7 +781,6 @@ button {
   max-inline-size: 100%;
   margin: 0;
   overflow: hidden;
-  min-block-size: calc(6lh + 0.2em);
   color: var(--text);
   font: 500 0.78em/1.5 ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
   white-space: pre;
@@ -852,34 +853,6 @@ button {
   color: var(--muted);
   font-size: 0.64em;
   font-weight: 600;
-}
-
-.tech-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.65em;
-  padding: 0.65em 0.95em;
-}
-
-.tech-badge strong, .tech-badge small {
-  display: block;
-}
-
-.tech-badge strong {
-  font-size: 0.82em;
-}
-
-.tech-badge small {
-  color: var(--muted);
-  font-size: 0.68em;
-}
-
-.tech-badge-dot {
-  inline-size: 0.6em;
-  block-size: 0.6em;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft), 0 0 14px var(--accent-glow);
 }
 
 /* ---------- Scroll indicator ---------- */
@@ -1428,7 +1401,15 @@ button {
 }
 
 .case-body {
+  display: grid;
+  gap: var(--case-gap);
   max-inline-size: 780px;
+  margin-block-start: var(--case-gap);
+}
+
+.case-body > .section {
+  margin: 0;
+  padding: 0;
 }
 
 .case-text {
@@ -1475,7 +1456,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-block-start: clamp(16px, 3vw, 32px);
+  margin-block-start: var(--case-gap);
   padding: 18px 20px;
 }
 
@@ -1487,7 +1468,7 @@ button {
 }
 
 .case-links {
-  margin-block-start: 28px;
+  margin: 0;
 }
 
 .case-pager {
@@ -1796,6 +1777,25 @@ button {
   margin-block-start: 0;
 }
 
+/* Education and Recognition cards share the row height; content stays top-aligned. */
+.experience-extras > .section {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-extras > .section > :last-child,
+.experience-extras .recognition-list > li,
+.experience-extras .recognition-list > li > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-extras .info-card {
+  flex: 1;
+  align-content: start;
+}
+
 @media (min-width: 768px) {
   .experience-extras {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1830,7 +1830,8 @@ button {
 }
 
 .recognition-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   margin: 0;
   padding: 0;
@@ -2779,7 +2780,7 @@ textarea.input {
     --header-height: 68px;
   }
 
-  .header-about {
+  .header-cta {
     display: none;
   }
 
@@ -2799,7 +2800,6 @@ textarea.input {
     font-size: 0.74rem;
   }
 
-  .card-badge { inset: 2% auto auto -1%; }
   .card-build { inset: auto -2% -3% auto; }
 
   .hero-actions {
@@ -2812,7 +2812,7 @@ textarea.input {
 }
 
 @media (min-width: 560px) and (max-width: 767px) {
-  .header-about {
+  .header-cta {
     display: inline-flex;
   }
 }

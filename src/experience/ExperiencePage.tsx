@@ -17,7 +17,7 @@ export function ExperiencePage() {
   const stats = [
     { label: 'Years of experience', value: yearsOfExperience(), suffix: '+' },
     { label: 'Companies', value: experience.length },
-    { label: 'Projects', value: projects.filter((project) => project.kind === 'Professional').length },
+    { label: 'Client projects', value: projects.filter((project) => project.kind === 'Professional').length },
   ]
 
   return (
@@ -51,12 +51,12 @@ export function ExperiencePage() {
 
         <Section title="Recognition" eyebrow="Awards">
           <ul className="recognition-list">
-            {recognition.map((item, index) => (
-              <li key={item}>
+            {recognition.map(({ title, org, year }, index) => (
+              <li key={`${title}-${year}`}>
                 <Reveal delay={index * 0.08}>
                   <div className="glass-card info-card recognition-card">
                     <AwardIcon className="recognition-icon" />
-                    <p className="info-text">{item}</p>
+                    <p className="info-text">{[title, org, year].join(' · ')}</p>
                   </div>
                 </Reveal>
               </li>

@@ -27,7 +27,8 @@ const snippet: Token[] = [
 
 const source = snippet.map(({ text }) => text).join('')
 const totalLength = source.length
-const longestLine = Math.max(...source.split('\n').map((line) => line.length))
+const lines = source.split('\n')
+const longestLine = Math.max(...lines.map((line) => line.length))
 const tokenStarts = [0]
 for (const { text } of snippet) tokenStarts.push((tokenStarts.at(-1) ?? 0) + text.length)
 
@@ -56,7 +57,8 @@ export function ProfileCard({ reduceMotion, active }: { reduceMotion: boolean; a
         <i /><i /><i />
         <span>profile.ts</span>
       </div>
-      <pre style={{ inlineSize: `${longestLine + 1}ch` }}>
+      {/* Reserve exactly the finished size so typing never shifts the layout. */}
+      <pre style={{ inlineSize: `${longestLine + 1}ch`, blockSize: `${lines.length}lh` }}>
         <code>
           {snippet.map(({ text, kind }, index) => {
             const visible = text.slice(0, Math.max(0, typed - tokenStarts[index]))
@@ -90,18 +92,6 @@ export function BuildCard() {
           </li>
         ))}
       </ul>
-    </div>
-  )
-}
-
-export function TechBadge() {
-  return (
-    <div className="tech-badge">
-      <span className="tech-badge-dot" />
-      <span>
-        <strong>React 19 + R3F</strong>
-        <small>TypeScript · Vite</small>
-      </span>
     </div>
   )
 }

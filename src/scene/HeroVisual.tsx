@@ -1,5 +1,5 @@
 import { Component, lazy, Suspense, useCallback, useEffect, useState, type ReactNode, type RefObject } from 'react'
-import { BuildCard, ProfileCard, TechBadge } from '../hero/cards'
+import { BuildCard, ProfileCard } from '../hero/cards'
 import { FloatingCard } from '../hero/FloatingCard'
 import type { HeroPointer } from '../hero/useHeroPointer'
 import { useTheme } from '../theme'
@@ -115,9 +115,6 @@ export function HeroVisual({ frame, pointer, reduceMotion, pageVisible }: HeroVi
       </FloatingCard>
       <FloatingCard className="card-build" depth={14} pointerX={pointer.x} pointerY={pointer.y} delay={0.7} reduceMotion={reduceMotion} pageVisible={pageVisible} decorative={false}>
         <BuildCard />
-      </FloatingCard>
-      <FloatingCard className="card-badge" depth={10} pointerX={pointer.x} pointerY={pointer.y} delay={0.9} reduceMotion={reduceMotion} pageVisible={pageVisible}>
-        <TechBadge />
       </FloatingCard>
     </div>
   )

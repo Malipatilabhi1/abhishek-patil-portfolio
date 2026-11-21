@@ -47,9 +47,11 @@ export function CaseStudy({ project }: { project: Project }) {
       <ProjectVisual project={project} size="large" />
 
       <div className="case-body">
-        <Section title="Overview">
-          <p className="case-text">{project.summary}</p>
-        </Section>
+        {project.overview && (
+          <Section title="Overview">
+            <p className="case-text">{project.overview}</p>
+          </Section>
+        )}
 
         <Section title="What I did">
           <ul className="highlight-list">
@@ -64,15 +66,6 @@ export function CaseStudy({ project }: { project: Project }) {
         <Section title="Tech stack">
           <TechChips items={project.tech} />
         </Section>
-
-        {project.confidential && (
-          <aside className="glass-card case-note" aria-label="About confidentiality">
-            <p>
-              This is client work, so code, screenshots and data stay private. Happy to walk through it in an interview.
-            </p>
-            <Link className="button button-secondary button-small" to="/contact">Get in touch</Link>
-          </aside>
-        )}
 
         {(links.live || links.code) && (
           <div className="page-actions case-links">
@@ -89,6 +82,15 @@ export function CaseStudy({ project }: { project: Project }) {
           </div>
         )}
       </div>
+
+      {project.confidential && (
+        <aside className="glass-card case-note" aria-label="About confidentiality">
+          <p>
+            This is client work, so code, screenshots and data stay private. Happy to walk through it in an interview.
+          </p>
+          <Link className="button button-secondary button-small" to="/contact">Get in touch</Link>
+        </aside>
+      )}
 
       <nav className="case-pager" aria-label="More projects">
         {previous && (

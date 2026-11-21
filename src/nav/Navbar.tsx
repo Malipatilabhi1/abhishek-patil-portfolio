@@ -72,7 +72,7 @@ export function Navbar({ focusMain }: { focusMain: () => void }) {
           </nav>
         </LayoutGroup>
         <div className="header-actions">
-          <Link className="button button-small button-secondary header-about" to="/about">About Me</Link>
+          <Link className="button button-small button-secondary header-cta" to="/contact">Let's talk</Link>
           <ThemeToggle />
           <MobileMenu focusMain={focusMain} focusDesktopNavigation={focusDesktopNavigation} />
         </div>
