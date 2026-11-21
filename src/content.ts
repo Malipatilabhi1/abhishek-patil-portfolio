@@ -271,8 +271,7 @@ export const projects: readonly Project[] = [
     tech: ['React', 'TypeScript', 'Three.js', 'Motion', 'Vite'],
     featured: true,
     confidential: false,
-    // TODO: add the repository URL, then remove the "TODO: " prefix.
-    links: { code: 'TODO: https://github.com/your-username/portfolio' },
+    links: { code: 'https://github.com/malipatilabhi1/abhishek-patil-portfolio' },
   },
 ]
 
