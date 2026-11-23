@@ -465,7 +465,8 @@ button {
     animation: status-pulse 2.4s ease-out infinite;
   }
 
-  :root[data-page-hidden] .status-dot::after {
+  :root[data-page-hidden] .status-dot::after,
+  .hero[data-motion-paused="true"] .status-dot::after {
     animation-play-state: paused;
   }
 }
@@ -569,8 +570,7 @@ button {
   animation: marquee 30s linear infinite;
 }
 
-.marquee:hover .marquee-track,
-.marquee[data-paused="true"] .marquee-track {
+.marquee:hover .marquee-track {
   animation-play-state: paused;
 }
 
@@ -2785,7 +2785,15 @@ textarea.input {
   }
 
   .hero {
-    padding-block: 8px 48px;
+    padding-block: 24px 48px;
+  }
+
+  .hero-grid {
+    gap: 24px;
+  }
+
+  .hero-visual-wrap {
+    order: 0;
   }
 
   .hero-visual {
@@ -2823,7 +2831,8 @@ textarea.input {
   }
 }
 
-:root[data-page-hidden] :is(.marquee-track, .visual-orbit-inner, .floating-card-bob, .caret) {
+:root[data-page-hidden] :is(.marquee-track, .visual-orbit-inner, .floating-card-bob, .caret),
+.hero[data-motion-paused="true"] :is(.marquee-track, .visual-orbit-inner, .floating-card-bob, .caret) {
   animation-play-state: paused !important;
 }
 

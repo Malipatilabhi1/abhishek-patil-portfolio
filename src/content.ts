@@ -187,6 +187,33 @@ export type Project = {
   links: ProjectLinks
 }
 
+export const mtmxChapters = [
+  {
+    id: 'conversion',
+    title: 'Conversion workflows',
+    explanation: 'A cross-border payment message may need to move between SWIFT MT and ISO 20022 MX / CBPR+ as it is processed.',
+    contribution: 'I enhanced MT/MX and CBPR+ conversion and processing workflows across regional configurations.',
+    flow: ['SWIFT MT', 'ISO 20022 MX / CBPR+'],
+    flowDescription: 'Conversion links the SWIFT MT and ISO 20022 MX / CBPR+ message formats.',
+  },
+  {
+    id: 'mapping',
+    title: 'Mapping and validation',
+    explanation: 'Moving between formats requires matching individual message fields and checking that the XML conforms to its schema.',
+    contribution: 'I worked on payment-message field mapping and XML schema validation.',
+    flow: ['Message fields', 'Field mapping', 'XML schema validation'],
+    flowDescription: 'Message fields connect to field mapping and XML schema validation.',
+  },
+  {
+    id: 'returns',
+    title: 'Return-reference linking',
+    explanation: 'A return message needs a way to point back to the payment it refers to.',
+    contribution: 'I linked return messages to their original payment references.',
+    flow: ['Return message', 'Original payment reference'],
+    flowDescription: 'A return message points back to the original payment reference.',
+  },
+] as const
+
 export const projects: readonly Project[] = [
   {
     slug: 'mtmx',
@@ -196,12 +223,7 @@ export const projects: readonly Project[] = [
     kind: 'Professional',
     category: 'Banking',
     summary: 'Conversion and processing of cross-border payment messages between SWIFT MT and ISO 20022 MX / CBPR+ formats.',
-    overview: 'A Finonyx banking product for cross-border payments, where messages move between SWIFT MT and ISO 20022 MX / CBPR+ formats. Every message has to be mapped field by field, pass XML schema validation and behave correctly across regional configurations. I enhanced the conversion and processing workflows, worked on field mapping and schema validation, and linked return messages to their original payment references.',
-    highlights: [
-      'Enhanced MT/MX and CBPR+ conversion and processing workflows across regional configurations.',
-      'Worked on payment-message field mapping and XML schema validation.',
-      'Linked return messages to their original payment references.',
-    ],
+    highlights: mtmxChapters.map(({ contribution }) => contribution),
     tech: ['Node.js', 'Oracle', 'IBM MQ', 'XML Schema'],
     featured: true,
     confidential: true,
@@ -270,13 +292,13 @@ export const projects: readonly Project[] = [
     subtitle: '3D, motion-rich personal site',
     kind: 'Personal',
     category: 'Personal',
-    summary: "The site you're on: React 19, React Three Fiber and Motion, tuned for performance and accessibility.",
-    overview: "My personal site, built with React, TypeScript, Three.js, Motion and Vite. The challenge was making it 3D and motion-rich without hurting load speed or accessibility, so the 3D hero is lazy-loaded and never blocks first paint, and the site supports light/dark themes and reduced motion. I designed and built it myself; the code is open on GitHub.",
+    summary: "The site you're on: a personal portfolio built with React 19, React Three Fiber and Motion.",
+    overview: 'My personal site brings together case studies, work history and a 3D home screen. It was developed with AI-assisted design and implementation using React, TypeScript, Three.js, Motion and Vite. I use the site to share my work and explore interactive web design.',
     monogram: 'P',
     highlights: [
-      'Lazy-loaded 3D hero that never blocks first paint.',
+      'Deferred 3D hero with a static monogram fallback.',
       'Multi-page routing, light/dark themes, reduced-motion support.',
-      'Built to score high on Lighthouse with zero layout shift.',
+      'Route-level loading and on-demand rendering for the 3D scene.',
     ],
     tech: ['React', 'TypeScript', 'Three.js', 'Motion', 'Vite'],
     featured: true,
@@ -352,7 +374,7 @@ export const chapters = [
     eyebrow: 'Experience',
     intro: `${experienceLabel()} building and supporting enterprise web applications, from React interfaces to Node.js services, Oracle and IBM MQ.`,
   },
-  { path: '/contact', title: 'Contact', eyebrow: 'Get in touch', intro: 'Have a role, a project or a question? I usually reply within a day.' },
+  { path: '/contact', title: 'Contact', eyebrow: 'Get in touch', intro: 'Get in touch about a role, a project or a question.' },
 ] as const
 
 export type AboutPhoto = {
@@ -426,15 +448,15 @@ export const contact = {
     email: 'Please enter a valid email address, like name@example.com.',
     message: 'Your message needs at least 20 characters.',
   },
-  mailtoNote: 'This opens your email app with your message ready to send.',
+  mailtoNote: 'This opens a draft in your email app. Send the message from there.',
   status: {
-    mailto: 'Opening your email app with your message ready to send.',
+    mailto: 'Opening a draft in your email app. Send the message from there.',
     sent: 'Message sent. Thank you!',
     failed: "Something went wrong and your message wasn't sent.",
   },
   success: {
     title: 'Thanks, your message is on its way.',
-    text: "I'll get back to you within a day.",
+    text: 'Thanks for reaching out.',
     again: 'Send another',
   },
   fallbackLead: 'You can also email me directly at',
@@ -445,8 +467,8 @@ export const contact = {
   /** IST working hours: [start, end) in 24h. */
   workingHours: { start: 9, end: 19 },
   timeStatus: {
-    working: "Working hours, I'll reply soon",
-    outside: "Outside working hours, I'll reply tomorrow",
+    working: 'Within usual working hours',
+    outside: 'Outside usual working hours',
   },
   availableText: 'Available for work',
   resumeLabel: 'Download Resume',

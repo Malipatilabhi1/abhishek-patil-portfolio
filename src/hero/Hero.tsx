@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useRef } from 'react'
+import { Fragment, useLayoutEffect, useRef, useState } from 'react'
 import { motion, type Variants } from 'motion/react'
 import { Link } from 'react-router'
 import { home, profile } from '../content'
@@ -11,6 +11,7 @@ import { TechMarquee } from './TechMarquee'
 import { useHeroPointer } from './useHeroPointer'
 
 const ease = [0.22, 1, 0.36, 1] as const
+const PAUSE_KEY = 'portfolio-marquee-paused'
 
 const headline: Variants = {
   hidden: {},
@@ -25,12 +26,29 @@ const word: Variants = {
 export function Hero() {
   const section = useRef<HTMLElement>(null)
   const visual = useRef<HTMLDivElement>(null)
+  const [motionPaused, setMotionPaused] = useState(() => {
+    try {
+      return localStorage.getItem(PAUSE_KEY) === 'true'
+    } catch {
+      return false
+    }
+  })
   const reduceMotion = useMediaQuery(queries.reducedMotion)
   const pageVisible = usePageVisibility()
   const finePointer = useMediaQuery(queries.finePointer)
   const pointerMotion = finePointer && !reduceMotion && pageVisible
   const pointer = useHeroPointer(section, visual, pointerMotion)
   const skipEntrance = reduceMotion || !pageVisible
+
+  function toggleMotion() {
+    const next = !motionPaused
+    setMotionPaused(next)
+    try {
+      localStorage.setItem(PAUSE_KEY, String(next))
+    } catch {
+      // The control still works when storage is unavailable.
+    }
+  }
 
   useLayoutEffect(() => {
     if (pageVisible) return
@@ -57,7 +75,7 @@ export function Hero() {
   }
 
   return (
-    <section ref={section} className="hero" aria-labelledby="hero-heading">
+    <section ref={section} id="home-hero" className="hero" aria-labelledby="hero-heading" data-motion-paused={motionPaused}>
       <div className="hero-grid site-width">
         <div className="hero-copy">
           <motion.p className="status-pill" {...entrance(0)}>
@@ -96,7 +114,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div className="hero-stack" {...entrance(5)}>
-            <TechMarquee />
+            <TechMarquee paused={motionPaused} onToggle={toggleMotion} />
           </motion.div>
         </div>
 

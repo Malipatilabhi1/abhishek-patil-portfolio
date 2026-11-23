@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router'
-import { formatPeriod, getProjectLinks, type Project } from '../content'
+import { getProjectLinks, type Project } from '../content'
 import { PageHeader } from '../components/PageHeader'
 import { Reveal } from '../components/Reveal'
 import { Section } from '../components/Section'
 import { ArrowIcon } from '../icons'
+import { MtmxStory } from './MtmxStory'
 import { ProjectVisual } from './ProjectVisual'
 import { TechChips } from './TechChips'
 import { experienceFor, neighbours, readFrom, type WorkLocationState } from './workModel'
@@ -15,19 +16,17 @@ export function CaseStudy({ project }: { project: Project }) {
   const role = experienceFor(project)
   const links = getProjectLinks(project)
   const { previous, next } = neighbours(project.slug)
+  const isMtmx = project.slug === 'mtmx'
 
   const meta = [
     { term: 'Organisation', detail: project.org ?? 'Personal project' },
     { term: 'Type', detail: project.kind },
     { term: 'Category', detail: project.category },
-    ...(role ? [
-      { term: 'Role', detail: role.role },
-      { term: 'Period', detail: formatPeriod(role.start, role.end) },
-    ] : []),
+    ...(role ? [{ term: 'Role', detail: role.role }] : []),
   ]
 
   return (
-    <article className="page site-width case-study">
+    <article className={`page site-width case-study${isMtmx ? ' mtmx-case-study' : ''}`}>
       <Link className="back-link" to={`/work${from}`}>
         <ArrowIcon className="back-link-icon" />
         All work
@@ -44,7 +43,7 @@ export function CaseStudy({ project }: { project: Project }) {
         ))}
       </dl>
 
-      <ProjectVisual project={project} size="large" />
+      {isMtmx ? <MtmxStory /> : <ProjectVisual project={project} size="large" />}
 
       <div className="case-body">
         {project.overview && (
@@ -53,15 +52,17 @@ export function CaseStudy({ project }: { project: Project }) {
           </Section>
         )}
 
-        <Section title="What I did">
-          <ul className="highlight-list">
-            {project.highlights.map((highlight, index) => (
-              <li key={highlight}>
-                <Reveal delay={index * 0.07}>{highlight}</Reveal>
-              </li>
-            ))}
-          </ul>
-        </Section>
+        {!isMtmx && (
+          <Section title="What I did">
+            <ul className="highlight-list">
+              {project.highlights.map((highlight, index) => (
+                <li key={highlight}>
+                  <Reveal delay={index * 0.07}>{highlight}</Reveal>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
 
         <Section title="Tech stack">
           <TechChips items={project.tech} />

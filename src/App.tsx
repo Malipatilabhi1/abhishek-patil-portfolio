@@ -1,34 +1,37 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, type ReactNode } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, type ReactNode } from 'react'
 import { BrowserRouter, Route, Routes, useLocation, useParams } from 'react-router'
 import { MotionConfig, motion, useReducedMotion } from 'motion/react'
-import { chapters, projects } from './content'
+import { chapters, home, profile, projects } from './content'
 import { ChapterPlaceholder } from './ChapterPlaceholder'
 import { Footer } from './components/Footer'
-import { Home } from './Home'
 import { Navbar } from './nav/Navbar'
 import { NotFound } from './NotFound'
 import { usePageVisibility } from './usePageVisibility'
-import { CaseStudy } from './work/CaseStudy'
-import { WorkPage } from './work/WorkPage'
-import { ExperiencePage } from './experience/ExperiencePage'
-import { AboutPage } from './about/AboutPage'
-import { ContactPage } from './contact/ContactPage'
+
+const Home = lazy(() => import('./Home').then((module) => ({ default: module.Home })))
+const WorkPage = lazy(() => import('./work/WorkPage').then((module) => ({ default: module.WorkPage })))
+const CaseStudy = lazy(() => import('./work/CaseStudy').then((module) => ({ default: module.CaseStudy })))
+const ExperiencePage = lazy(() => import('./experience/ExperiencePage').then((module) => ({ default: module.ExperiencePage })))
+const AboutPage = lazy(() => import('./about/AboutPage').then((module) => ({ default: module.AboutPage })))
+const ContactPage = lazy(() => import('./contact/ContactPage').then((module) => ({ default: module.ContactPage })))
 
 function Page({ title, children }: { title: string; children: ReactNode }) {
   const reduceMotion = useReducedMotion()
 
   useEffect(() => {
-    document.title = title === 'Home' ? 'Abhishek | Frontend Engineer' : `${title} | Abhishek`
+    document.title = title === 'Home' ? `${home.name} | ${profile.role}` : `${title} | ${home.name}`
   }, [title])
 
   return (
-    <motion.div
-      initial={title === 'Home' || reduceMotion ? false : { opacity: 0.75, y: 5 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.22, ease: 'easeOut' }}
-    >
-      {children}
-    </motion.div>
+    <Suspense fallback={<p className="page site-width" role="status">Loading…</p>}>
+      <motion.div
+        initial={title === 'Home' || reduceMotion ? false : { opacity: 0.75, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
+      >
+        {children}
+      </motion.div>
+    </Suspense>
   )
 }
 

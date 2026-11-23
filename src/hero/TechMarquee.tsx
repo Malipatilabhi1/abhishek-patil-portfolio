@@ -1,8 +1,5 @@
-import { useState } from 'react'
 import { siNodedotjs, siReact, siThreedotjs, siTypescript, siVite } from 'simple-icons'
 import { BrandIcon, PlaybackIcon } from '../icons'
-
-const PAUSE_KEY = 'portfolio-marquee-paused'
 
 const stack = [
   { name: 'React', icon: siReact },
@@ -26,36 +23,19 @@ function Items({ duplicate = false }: { duplicate?: boolean }) {
 }
 
 /** Infinite CSS marquee; collapses to a static wrapped list under reduced motion. */
-export function TechMarquee() {
-  const [paused, setPaused] = useState(() => {
-    try {
-      return localStorage.getItem(PAUSE_KEY) === 'true'
-    } catch {
-      return false
-    }
-  })
-  const action = paused ? 'Resume technology marquee' : 'Pause technology marquee'
-
-  function togglePause() {
-    const next = !paused
-    setPaused(next)
-    try {
-      localStorage.setItem(PAUSE_KEY, String(next))
-    } catch {
-      // The control still works when storage is unavailable.
-    }
-  }
+export function TechMarquee({ paused, onToggle }: { paused: boolean; onToggle: () => void }) {
+  const action = paused ? 'Resume looping Home animations' : 'Pause looping Home animations'
 
   return (
     <div className="marquee-controls">
-      <div className="marquee" data-paused={paused}>
-        <div className="marquee-track" id="technology-marquee">
+      <div className="marquee">
+        <div className="marquee-track">
           <Items />
           <Items duplicate />
         </div>
       </div>
-      <button type="button" className="icon-button marquee-toggle" aria-controls="technology-marquee"
-        aria-label={action} title={action} onClick={togglePause}
+      <button type="button" className="icon-button marquee-toggle" aria-controls="home-hero"
+        aria-label={action} title={action} onClick={onToggle}
       >
         <PlaybackIcon paused={paused} />
       </button>

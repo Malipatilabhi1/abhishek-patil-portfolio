@@ -62,7 +62,7 @@ function useDeferredMount(active: boolean, delayAfterLoad = 2500) {
 }
 
 function useInView(target: RefObject<HTMLElement | null>) {
-  const [inView, setInView] = useState(true)
+  const [inView, setInView] = useState(false)
   useEffect(() => {
     const element = target.current
     if (!element) return
